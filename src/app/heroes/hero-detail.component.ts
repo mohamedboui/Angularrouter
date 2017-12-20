@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { HeroService,Hero }  from './hero.service';
@@ -14,7 +14,7 @@ import { HeroService,Hero }  from './hero.service';
       <input [(ngModel)]="hero.name" placeholder="name"/>
     </label>
   </div>
-  <button (click)="goBack()">go back</button>
+  <button (click)="goBack(hero.id)">go back</button>
 </div>`,
 })
 export class HeroDetailComponent implements OnInit {
@@ -23,7 +23,8 @@ export class HeroDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private heroService: HeroService,
-    private location: Location
+    private router: Router,
+
   ) {}
 
   ngOnInit(): void {
@@ -36,8 +37,8 @@ export class HeroDetailComponent implements OnInit {
       .subscribe(hero => this.hero = hero);
   }
 
-  goBack(): void {
-    this.location.back();
+  goBack(id:number): void {
+    this.router.navigate(['/heroes',{id:id,Foo:'foo'}])
   }
 }
 
